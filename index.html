@@ -1,1 +1,243 @@
-olá mundo
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sociedade Walingardyana</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1; overflow: hidden;
+    }
+    #background-video {
+      position: fixed;
+      top: 0; left: 0;
+      min-width: 100%; min-height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .notification-container {
+      position: relative;
+      display: inline-block;
+      padding-top: 8px;
+    }
+    .notification-badge {
+      position: absolute;
+      top: -10px;
+      right: -12px;
+      width: 24px;
+      height: 24px;
+      background-image: url("Design sem nome.png");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      z-index: 10;
+    }
+    .flag {
+      width: 28px;
+      height: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="text-gray-900">
+  <!-- Vídeo de fundo -->
+  <video id="background-video" autoplay muted loop>
+    <source src="0321.mp4" type="video/mp4" />
+    Seu navegador não suporta vídeo HTML5.
+  </video>
+
+  <header class="bg-black text-white p-4 shadow-md">
+    <div class="container mx-auto flex flex-col items-center">
+      <!-- Bandeiras de idioma -->
+      <div class="flex justify-end w-full mb-2 space-x-2">
+        <img src="brasil.png" alt="PT" class="flag" onclick="setLanguage('pt')" title="Português">
+        <img src="estadosunidos.png" alt="EN" class="flag" onclick="setLanguage('en')" title="English">
+        <img src="espanha.png" alt="ES" class="flag" onclick="setLanguage('es')" title="Español">
+      </div>
+      <img src="oficial.png" alt="Logo Walingardyana" class="w-32 h-auto mb-2" />
+      <h1 id="titulo-principal" class="text-2xl font-bold">Sociedade Walingardyana</h1>
+      <nav class="flex flex-wrap gap-4 justify-center mt-2">
+        <div class="notification-container">
+          <a id="nav-novidades" href="novidades.html" class="hover:underline">Novidades do Universo</a>
+          <div class="notification-badge">2</div>
+        </div>
+        <div class="notification-container">
+          <a id="nav-contos" href="contos.html" class="hover:underline">Contos de Walingardyn</a>
+          <div class="notification-badge">1</div>
+        </div>
+        <div class="notification-container">
+          <a id="nav-loja" href="loja.html" class="hover:underline">Loja Oficial</a>
+        </div>
+        <div class="notification-container">
+          <a id="nav-gabryell" href="gabryell.html" class="hover:underline">Tudo sobre Gabryell Aweryan</a>
+          <div class="notification-badge">3</div>
+        </div>
+        <div class="notification-container">
+          <a id="nav-casas" href="casas.html" class="hover:underline">Casas de Walingardyn</a>
+        </div>
+        <div class="notification-container">
+          <a id="nav-obras" href="obras.html" class="hover:underline">Obras Canônicas</a>
+        </div>
+        <div class="notification-container">
+          <a id="nav-biblioteca" href="leitor.html" class="hover:underline">Biblioteca</a>
+        </div>
+      </nav>
+      <p id="notificacao" class="text-sm mt-2 italic text-center max-w-xl">
+        Usuários apoiadores recebem um e-mail de notificação sempre que algo novo for publicado nas categorias acima. 
+      </p>
+    </div>
+  </header>
+
+  <section class="container mx-auto mt-6">
+    <div class="h-80 rounded overflow-hidden shadow-lg">
+      <video class="w-full h-full object-cover" controls autoplay muted loop>
+        <source src="uuy.mp4" type="video/mp4" />
+        Seu navegador não suporta vídeo HTML5.
+      </video>
+    </div>
+  </section>
+
+  <!-- Mapa Interativo de Walingardyn -->
+  <section class="container mx-auto mt-12 text-white">
+    <h2 id="titulo-mapa" class="text-2xl font-semibold text-center mb-4">Explore o Mapa de Walingardyn</h2>
+    <p id="subtitulo-mapa" class="text-center mb-6 text-lg italic">
+      Navegue pelos continentes, descubra reinos e mergulhe na geografia mística do universo.
+    </p>
+    <div class="relative w-full max-w-4xl mx-auto">
+      <img src="mapa-walingardyn.png" alt="Mapa de Walingardyn" class="rounded-lg shadow-lg w-full">
+      <a href="triohnte.html" class="absolute top-[40%] left-[48%] bg-blue-700 text-xs px-2 py-1 rounded-full text-white hover:bg-blue-900 transition" title="Triohnte">Triohnte</a>
+      <a href="lyvesbourn.html" class="absolute top-[60%] left-[70%] bg-green-700 text-xs px-2 py-1 rounded-full text-white hover:bg-green-900 transition" title="Lyvesbourn">Lyvesbourn</a>
+      <a href="costahlya.html" class="absolute top-[20%] left-[30%] bg-yellow-600 text-xs px-2 py-1 rounded-full text-white hover:bg-yellow-800 transition" title="Costahlya">Costahlya</a>
+      <a href="estremares.html" class="absolute top-[15%] left-[10%] bg-red-600 text-xs px-2 py-1 rounded-full text-white hover:bg-red-800 transition" title="Estremares">Estremares</a>
+    </div>
+  </section>
+
+  <!-- Texto de boas-vindas -->
+  <section class="text-white text-center text-lg font-medium mt-6">
+    <p id="boas-vindas">Seja bem-vindo, caro leitor! Apresentamos a você a porta e entrada do mundo de Walingardyn.</p>
+  </section>
+
+  <!-- Fórum -->
+  <main class="container mx-auto p-6 space-y-16">
+    <section id="forum">
+      <h2 id="titulo-forum" class="text-xl font-semibold mb-4 text-white">Fórum</h2>
+      <div class="shadow-md p-4 rounded-md">
+        <div id="chat" class="h-64 overflow-y-scroll border p-2 mb-4 bg-transparent text-white"></div>
+        <form id="chat-form" class="flex gap-2">
+          <input id="message" type="text" placeholder="Digite sua mensagem..." class="flex-1 border rounded px-2 py-1" required />
+          <button id="btn-enviar" type="submit" class="bg-blue-600 text-white px-4 py-1 rounded">Enviar</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-black text-white text-center p-4 mt-16 space-y-2">
+    <p>&copy; 2025 Sociedade Walingardyana. Todos os direitos reservados.</p>
+    <div class="flex justify-center space-x-6">
+      <a href="https://www.youtube.com/@sociedadewalingardyana" target="_blank" class="hover:underline">YouTube</a>
+      <a href="https://discord.gg/xTVv72FUuU" target="_blank" class="hover:underline">Discord</a>
+      <a href="https://www.instagram.com/swalingardynofc/" target="_blank" class="hover:underline">Instagram</a>
+    </div>
+  </footer>
+
+  <!-- Tradução e Chat -->
+  <script>
+    const traducoes = {
+      pt: {
+        "titulo-principal": "Sociedade Walingardyana",
+        "nav-novidades": "Novidades do Universo",
+        "nav-contos": "Contos de Walingardyn",
+        "nav-loja": "Loja Oficial",
+        "nav-gabryell": "Tudo sobre Gabryell Aweryan",
+        "nav-casas": "Casas de Walingardyn",
+        "nav-obras": "Obras Canônicas",
+        "nav-biblioteca": "Biblioteca",
+        "notificacao": "Usuários apoiadores recebem um e-mail de notificação sempre que algo novo for publicado nas categorias acima.",
+        "titulo-mapa": "Explore o Mapa de Walingardyn",
+        "subtitulo-mapa": "Navegue pelos continentes, descubra reinos e mergulhe na geografia mística do universo.",
+        "boas-vindas": "Seja bem-vindo, caro leitor! Apresentamos a você a porta e entrada do mundo de Walingardyn.",
+        "titulo-forum": "Fórum",
+        "message-placeholder": "Digite sua mensagem...",
+        "btn-enviar": "Enviar"
+      },
+      en: {
+        "titulo-principal": "Walingardyan Society",
+        "nav-novidades": "Universe News",
+        "nav-contos": "Walingardyn Tales",
+        "nav-loja": "Official Store",
+        "nav-gabryell": "About Gabryell Aweryan",
+        "nav-casas": "Walingardyn Houses",
+        "nav-obras": "Canonical Works",
+        "nav-biblioteca": "Library",
+        "notificacao": "Supporter users receive an email notification whenever something new is published in the categories above.",
+        "titulo-mapa": "Explore the Map of Walingardyn",
+        "subtitulo-mapa": "Navigate through continents, discover kingdoms, and dive into the mystical geography of the universe.",
+        "boas-vindas": "Welcome, dear reader! You are entering the world of Walingardyn.",
+        "titulo-forum": "Forum",
+        "message-placeholder": "Type your message...",
+        "btn-enviar": "Send"
+      },
+      es: {
+        "titulo-principal": "Sociedad Walingardyana",
+        "nav-novidades": "Novedades del Universo",
+        "nav-contos": "Cuentos de Walingardyn",
+        "nav-loja": "Tienda Oficial",
+        "nav-gabryell": "Todo sobre Gabryell Aweryan",
+        "nav-casas": "Casas de Walingardyn",
+        "nav-obras": "Obras Canónicas",
+        "nav-biblioteca": "Biblioteca",
+        "notificacao": "Los usuarios patrocinadores reciben un correo cada vez que se publica algo nuevo en las categorías anteriores.",
+        "titulo-mapa": "Explora el Mapa de Walingardyn",
+        "subtitulo-mapa": "Navega por los continentes, descubre reinos y sumérgete en la geografía mística del universo.",
+        "boas-vindas": "¡Bienvenido, querido lector! Presentamos la puerta de entrada al mundo de Walingardyn.",
+        "titulo-forum": "Foro",
+        "message-placeholder": "Escribe tu mensaje...",
+        "btn-enviar": "Enviar"
+      }
+    };
+
+    function setLanguage(lang) {
+      const t = traducoes[lang];
+      for (const id in t) {
+        const el = document.getElementById(id);
+        if (el) {
+          if (id === "message-placeholder") {
+            document.getElementById("message").placeholder = t[id];
+          } else {
+            el.textContent = t[id];
+          }
+        }
+      }
+    }
+
+    // Chat
+    const chatDiv = document.getElementById("chat");
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("message");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const msg = input.value.trim();
+      if (msg) {
+        const p = document.createElement("p");
+        p.textContent = msg;
+        chatDiv.appendChild(p);
+        chatDiv.scrollTop = chatDiv.scrollHeight;
+        input.value = "";
+      }
+    });
+  </script>
+</body>
+</html>
+
