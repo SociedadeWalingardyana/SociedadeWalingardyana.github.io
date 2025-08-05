@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loja Oficial - Sociedade Walingardyana</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-black text-white p-8 min-h-screen flex flex-col items-center">
+  <h1 class="text-3xl font-bold mb-6">Loja Oficial</h1>
+
+  <div class="grid grid-cols-1 gap-8 max-w-4xl w-full">
+
+    <!-- PRODUTO 1 - COMPÊNDIO (PDF) -->
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+      <img src="Compendio.png" alt="Compêndio" class="mx-auto mb-4 w-32 h-32" />
+      <h2 class="text-xl font-semibold mb-2">Compêndio Walingardyano (PDF)</h2>
+      <p class="text-sm mb-2">Versão digital para download. Ideal para acessar no celular ou tablet.</p>
+      <p class="text-lg font-bold mb-2">Preço: R$ 29,90</p>
+
+      <!-- Simulação de pagamento -->
+      <div class="bg-gray-900 p-4 rounded mb-4 text-left">
+        <p class="text-sm mb-1">GABRIEL ARAUJO A FELISMINO</p>
+        <p class="text-sm">Chave Pix: <span class="text-green-400">111.306.684-95</span></p>
+        <p class="text-sm mb-3">Banco: Mercado Pago</p>
+        <img src="qr-code.png" alt="QR Code Pix" class="mx-auto w-40 h-40 border border-white rounded" />
+      </div>
+
+      <button onclick="registrarCompraPDF()" class="bg-green-600 hover:bg-green-700 px-6 py-2 rounded font-bold mt-2">
+        Já paguei!
+      </button>
+    </div>
+
+    <!-- PRODUTO 2 - COMPÊNDIO (FÍSICO) -->
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+      <h2 class="text-xl font-semibold mb-2">Livro Físico: Compêndio Walingardyano</h2>
+      <p class="text-sm mb-4">Tudo o que você precisa saber sobre a magia oculta de Walingardyn.</p>
+      <p class="text-lg font-bold mb-2">Preço: R$ 31,00</p>
+    </div>
+
+    <!-- PRODUTO 3 - TRIOHNTE -->
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+      <h2 class="text-xl font-semibold mb-2">Livro: Triohnte, O Segredo do Império</h2>
+      <p class="text-sm mb-4">Política e mistério no principal continente de Walingardyn.</p>
+      <p class="text-lg font-bold mb-2">Preço: R$ 38,00</p>
+    </div>
+
+    <!-- PRODUTO 4 - SEGREDO DO IMPÉRIO -->
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+      <h2 class="text-xl font-semibold mb-2">Livro: O Segredo do Império</h2>
+      <p class="text-sm mb-4">Descubra os mistérios por trás das estruturas imperiais e seus efeitos mágicos.</p>
+      <p class="text-lg font-bold mb-2">Preço: R$ 42,00</p>
+    </div>
+
+    <!-- PRODUTO 5 - CAMISETA -->
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+      <h2 class="text-xl font-semibold mb-2">Camiseta Oficial</h2>
+      <p class="text-sm mb-4">Vista a Sociedade Walingardyana com orgulho.</p>
+      <p class="text-lg font-bold mb-2">Preço: R$ 59,90</p>
+    </div>
+
+    <!-- PRODUTO 6 - CACHECOL -->
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
+      <h2 class="text-xl font-semibold mb-2">Cachecol Oficial</h2>
+      <p class="text-sm mb-4">Ideal para aventuras em climas gelados como Costahlya.</p>
+      <p class="text-lg font-bold mb-2">Preço: R$ 39,90</p>
+    </div>
+
+  </div>
+
+  <a href="index.html" class="mt-12 text-blue-400 hover:underline">← Voltar para a página inicial</a>
+
+  <script>
+    function registrarCompraPDF() {
+      const produtos = JSON.parse(localStorage.getItem('produtosComprados') || '[]');
+      if (!produtos.includes('compendio')) {
+        produtos.push('compendio');
+        localStorage.setItem('produtosComprados', JSON.stringify(produtos));
+      }
+      alert("Compra registrada com sucesso! Vá até a aba Biblioteca para baixar o PDF.");
+    }
+  </script>
+</body>
+</html>
