@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="titulo-pagina">Obras Canônicas - Sociedade Walingardyana</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    .flag {
+      width: 32px;
+      height: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-black text-white p-8 min-h-screen flex flex-col items-center">
+
+  <!-- Bandeiras -->
+  <div class="flex justify-end w-full mb-6 space-x-2">
+    <img src="brasil.png" alt="PT" class="flag" onclick="setLanguage('pt')" title="Português">
+    <img src="estadosunidos.png" alt="EN" class="flag" onclick="setLanguage('en')" title="English">
+    <img src="espanha.png" alt="ES" class="flag" onclick="setLanguage('es')" title="Español">
+  </div>
+
+  <h1 id="titulo-obras" class="text-4xl font-bold mb-10">Obras Canônicas</h1>
+
+  <section class="max-w-4xl w-full space-y-8">
+    <article>
+      <h2 id="obra-1-titulo" class="text-2xl font-semibold mb-2">Triohnte, O segredo do império</h2>
+      <p id="obra-1-desc">O livro que abriu o universo de Walingardyn...</p>
+    </article>
+
+    <article>
+      <h2 id="obra-2-titulo" class="text-2xl font-semibold mb-2">Triohnte, E os alvitres do poder</h2>
+      <p id="obra-2-desc">O que seguirá a aventura dos reinos na descoberta de conspirações...</p>
+    </article>
+
+    <article>
+      <h2 id="obra-3-titulo" class="text-2xl font-semibold mb-2">Triohnte, E a batalha Lemoseryon</h2>
+      <p id="obra-3-desc">Cada vez mais perto do grande enfrentamento final...</p>
+    </article>
+
+    <article>
+      <h2 id="obra-4-titulo" class="text-2xl font-semibold mb-2">Triohnte, A batalha da bialiança</h2>
+      <p id="obra-4-desc">A batalha do juízo final. Onde Walingardyn encontrará fogo, sangue e destruições...</p>
+    </article>
+
+    <article>
+      <h2 id="obra-5-titulo" class="text-2xl font-semibold mb-2">Compêndio Walingardyano</h2>
+      <p id="obra-5-desc">O guia oficial de Walingardyn. Saiba tudo o que os livros oficiais não te contam...</p>
+    </article>
+  </section>
+  <script>
+    const traducoes = {
+      pt: {
+        "titulo-pagina": "Obras Canônicas - Sociedade Walingardyana",
+        "titulo-obras": "Obras Canônicas",
+        "obra-1-titulo": "Triohnte, O segredo do império",
+        "obra-1-desc": "O livro que abriu o universo de Walingardyn, o primeiro da estimada tetralogia oficial. Apresenta um mundo cheio de segredos, com enfoque na família do suposto protagonista e seu passado oculto.",
+        "obra-2-titulo": "Triohnte, E os alvitres do poder",
+        "obra-2-desc": " O que seguirá a aventura dos reinos na descoberta de conspirações e combate a elas enquanto lidam com os boatos, o segundo livro da estimada tetralogia oficial. ",
+        "obra-3-titulo": "Triohnte, E a batalha Lemoseryon",
+        "obra-3-desc": "Cada vez mais perto do grande enfrentamento final, exércitos se juntam em pactos bélicos valiosos. Os inimigos decidem a ofensiva global e Suas Majestades de Triohnte são convocados para a guerra. Este é o terceiro livro da estimada tetralogia oficial. ",
+        "obra-4-titulo": "Triohnte, A batalha da bialiança",
+        "obra-4-desc": "A batalha do juízo final. Onde Walingardyn encontrará fogo, sangue e destruições. Este é o momento de decidir lados, estaremos com os vilôes, ou com os heróis??",
+        "obra-5-titulo": "Compêndio Walingardyano",
+        "obra-5-desc": "O guia oficial de Walingardyn. Saiba tudo o que os livros oficias não te contam sobre o mundo onde essa tetralogia se passa."
+      },
+      en: {
+        "titulo-pagina": "Canonical Works - Walingardyan Society",
+        "titulo-obras": "Canonical Works",
+        "obra-1-titulo": "Triohnte, The Secret of the Empire",
+        "obra-1-desc": "The book that opened the Walingardyn universe, the first in the esteemed official tetralogy. It introduces a world full of secrets, focusing on the family of the supposed protagonist and his hidden past.",
+        "obra-2-titulo": "Triohnte, And the Counsel of Power",
+        "obra-2-desc": "What follows the kingdoms’ journey in uncovering conspiracies and fighting back, all while dealing with whispers and rumors, the second book in the esteemed official tetralogy.",
+        "obra-3-titulo": "Triohnte, And the Lemoseryon Battle",
+        "obra-3-desc": "Closer than ever to the great final clash, armies form powerful war pacts. The enemies make their global move, and Their Majesties of Triohnte are summoned to war. This is the third book in the esteemed official tetralogy.",
+        "obra-4-titulo": "Triohnte, The Battle of the Bi-Alliance",
+        "obra-4-desc": "The battle of the final judgment. Walingardyn will face fire, blood, and devastation. This is the moment to choose sides, are we with the “villains”… or the “heroes”?",
+        "obra-5-titulo": "Walingardyan Compendium",
+        "obra-5-desc": "The official guide to Walingardyn. Discover everything the main books didn’t tell you about the world behind the tetralogy."
+      },
+      es: {
+        "titulo-pagina": "Obras Canónicas - Sociedad Walingardyana",
+
+        "titulo-obras": "Obras Canónicas",
+        
+        "obra-1-titulo": "Triohnte, El secreto del imperio",
+        "obra-1-desc": "El libro que abrió el universo de Walingardyn, el primero de la estimada tetralogía oficial. Presenta un mundo lleno de secretos, con enfoque en la familia del supuesto protagonista y su pasado oculto.",
+        
+        "obra-2-titulo": "Triohnte, Y los augurios del poder",
+        "obra-2-desc": "Lo que sigue a la aventura de los reinos en el descubrimiento de conspiraciones y su lucha contra ellas, mientras lidian con rumores, el segundo libro de la estimada tetralogía oficial.",
+        
+        "obra-3-titulo": "Triohnte, Y la batalla de Lemoseryon",
+        "obra-3-desc": "Cada vez más cerca del gran enfrentamiento final, ejércitos se unen en valiosas alianzas bélicas. Los enemigos lanzan su ofensiva global y Sus Majestades de Triohnte son convocados a la guerra. Este es el tercer libro de la estimada tetralogía oficial.",
+        
+        "obra-4-titulo": "Triohnte, La batalla de la bialianza",
+        "obra-4-desc": "La batalla del juicio final. Donde Walingardyn enfrentará fuego, sangre y destrucción. Es el momento de decidir: ¿estaremos con los villanos o con los héroes?",
+        
+        "obra-5-titulo": "Compendio Walingardyno",
+        "obra-5-desc": "La guía oficial de Walingardyn. Descubre todo lo que los libros oficiales no te contaron sobre el mundo en el que se desarrolla esta tetralogía."
+      }
+    };
+
+    function setLanguage(lang) {
+      const t = traducoes[lang];
+      for (const id in t) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = t[id];
+      }
+      localStorage.setItem("idioma", lang);
+    }
+
+    window.onload = () => {
+      const lang = localStorage.getItem("idioma") || "pt";
+      setLanguage(lang);
+    };
+  </script>
+
+  <!-- Rodapé com link para voltar -->
+ <footer class="mt-auto pt-8 text-gray-400 text-center text-sm w-full">
+  &copy; 2025 Sociedade Walingardyana. Todos os direitos reservados.
+  <br />
+  <a href="index.html" class="mt-4 inline-block text-blue-400 hover:underline text-sm">
+    ← Voltar para a página inicial
+  </a>
+</footer>
+</body>
+</html>

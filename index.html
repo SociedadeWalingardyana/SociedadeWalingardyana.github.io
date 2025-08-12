@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sociedade Walingardyana</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1; overflow: hidden;
+    }
+    #background-video {
+      position: fixed;
+      top: 0; left: 0;
+      min-width: 100%; min-height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .flag {
+      width: 28px;
+      height: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="text-gray-900">
+
+  <!-- Vídeo de fundo -->
+  <video id="background-video" autoplay muted loop>
+    <source src="0321.mp4" type="video/mp4" />
+    Seu navegador não suporta vídeo HTML5.
+  </video>
+
+  <!-- Música de fundo automática -->
+  <audio autoplay loop muted id="musica-fundo">
+    <source src="musica-de-fundo.mp3" type="audio/mpeg" />
+    Seu navegador não suporta áudio HTML5.
+  </audio>
+
+  <header class="bg-black text-white p-4 shadow-md">
+    <div class="container mx-auto flex flex-col items-center">
+      <!-- Bandeiras removidas conforme solicitado -->
+      <img src="oficial.png" alt="Logo Walingardyana" class="w-32 h-auto mb-2" />
+      <h1 id="titulo-principal" class="text-2xl font-bold">Sociedade Walingardyana</h1>
+      <nav class="flex flex-wrap gap-4 justify-center mt-2">
+        <a id="nav-novidades" href="novidades.html" class="hover:underline">Novidades do Universo</a>
+        <a id="nav-contos" href="contos.html" class="hover:underline">Contos de Walingardyn</a>
+        <a id="nav-loja" href="loja.html" class="hover:underline">Loja Oficial</a>
+        <a id="nav-gabryell" href="gabryell.html" class="hover:underline">Tudo sobre Gabryell Aweryan</a>
+        <a id="nav-casas" href="casas.html" class="hover:underline">Casas de Walingardyn</a>
+        <a id="nav-obras" href="obras.html" class="hover:underline">Obras Canônicas</a>
+        <a id="nav-biblioteca" href="Biblioteca.html" class="hover:underline">Biblioteca</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="container mx-auto mt-6">
+    <div class="h-80 rounded overflow-hidden shadow-lg">
+      <!-- Vídeo sem controls, sem ícone de som -->
+      <video class="w-full h-full object-cover" autoplay muted loop>
+        <source src="walinga.mp4" type="video/mp4" />
+        Seu navegador não suporta vídeo HTML5.
+      </video>
+    </div>
+  </section>
+
+  <section class="text-white text-center text-lg font-medium mt-6">
+    <p id="boas-vindas">Seja bem-vindo, caro leitor! Apresentamos a você a porta e entrada do mundo de Walingardyn.</p>
+    <p id="explicativo1"> A Sociedade Walingardyana, anteriormente conhecida como O mundo de Triohnte, foi idealizada em dezembro de 2022. Em seu início, ainda não possuía registro ou patente no INPI (Instituto Nacional da Propriedade Industrial), órgão responsável pela formalização de marcas e patentes no Brasil.
+
+Nos primeiros meses, a iniciativa se consolidou apenas como um conceito, uma visão voltada à preservação e expansão do legado literário de seu criador. Foi somente após intenso trabalho e extensas investigações sobre as possibilidades da marca, especialmente diante dos novos materiais publicados, que o autor tomou a decisão de investir capital próprio para profissionalizar o projeto.
+
+Ao longo dessa trajetória, encontrou aliados que compartilharam de sua visão e confiaram em seu trabalho, entre eles Agatha Rosário e André Oliveira, cujos incentivos e colaborações ajudaram a fortalecer os alicerces da Sociedade Walingardyana e a projetá-la para além de sua concepção inicial.</p>
+  </section>
+
+  <!-- Botão fixo no canto superior direito -->
+  <div id="language-selector" style="
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: #1a1a1a;
+    /* sem borda */
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  ">
+    <span style="color: white; font-size: 16px; user-select: none;">▼</span>
+  </div>
+
+  <!-- Lista que vai abrir ao clicar -->
+  <ul id="language-list" style="
+    position: fixed;
+    top: 45px;
+    right: 10px;
+    width: 120px;
+    max-height: 150px;
+    overflow-y: auto;
+    background: #222;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+    display: none;
+    z-index: 9999;
+  ">
+    <li style="padding: 8px 12px; color: white; cursor: pointer; user-select: none;">Português</li>
+    <li style="padding: 8px 12px; color: white; cursor: pointer; user-select: none;">Español</li>
+    <li style="padding: 8px 12px; color: white; cursor: pointer; user-select: none;">English</li>
+  </ul>
+
+  <script>
+    const selector = document.getElementById('language-selector');
+    const list = document.getElementById('language-list');
+
+    selector.addEventListener('click', () => {
+      if (list.style.display === 'none' || list.style.display === '') {
+        list.style.display = 'block';
+      } else {
+        list.style.display = 'none';
+      }
+    });
+
+    // Fechar a lista se clicar fora
+    document.addEventListener('click', (e) => {
+      if (!selector.contains(e.target) && !list.contains(e.target)) {
+        list.style.display = 'none';
+      }
+    });
+
+    const traducoes = {
+      pt: {
+        "titulo-principal": "Sociedade Walingardyana",
+        "nav-novidades": "Novidades do Universo",
+        "nav-contos": "Contos de Walingardyn",
+        "nav-loja": "Loja Oficial",
+        "nav-gabryell": "Tudo sobre Gabryell Aweryan",
+        "nav-casas": "Casas de Walingardyn",
+        "nav-obras": "Obras Canônicas",
+        "nav-biblioteca": "Biblioteca",
+        "boas-vindas": "Seja bem-vindo, caro leitor! Apresentamos a você a porta e entrada do mundo de Walingardyn."
+      },
+      en: {
+        "titulo-principal": "Walingardyan Society",
+        "nav-novidades": "Universe News",
+        "nav-contos": "Walingardyn Tales",
+        "nav-loja": "Official Store",
+        "nav-gabryell": "About Gabryell Aweryan",
+        "nav-casas": "Walingardyn Houses",
+        "nav-obras": "Canonical Works",
+        "nav-biblioteca": "Library",
+        "boas-vindas": "Welcome, dear reader! You are entering the world of Walingardyn."
+      },
+      es: {
+        "titulo-principal": "Sociedad Walingardyana",
+        "nav-novidades": "Novedades del Universo",
+        "nav-contos": "Cuentos de Walingardyn",
+        "nav-loja": "Tienda Oficial",
+        "nav-gabryell": "Todo sobre Gabryell Aweryan",
+        "nav-casas": "Casas de Walingardyn",
+        "nav-obras": "Obras Canónicas",
+        "nav-biblioteca": "Biblioteca",
+        "boas-vindas": "¡Bienvenido, querido lector! Presentamos la puerta de entrada al mundo de Walingardyn."
+      }
+    };
+
+    function setLanguage(lang) {
+      const t = traducoes[lang];
+      for (const id in t) {
+        const el = document.getElementById(id);
+        if (el) {
+          el.textContent = t[id];
+        }
+      }
+    }
+
+    list.querySelectorAll('li').forEach((li) => {
+      li.addEventListener('click', () => {
+        let langCode = '';
+        switch (li.textContent) {
+          case 'Português':
+            langCode = 'pt';
+            break;
+          case 'Español':
+            langCode = 'es';
+            break;
+          case 'English':
+            langCode = 'en';
+            break;
+        }
+        setLanguage(langCode);
+        list.style.display = 'none';
+      });
+    });
+
+    // Ativar som da música no primeiro clique do usuário
+    document.addEventListener("click", () => {
+      const audio = document.getElementById("musica-fundo");
+      if (audio && audio.muted) {
+        audio.muted = false;
+        audio.play();
+      }
+    }, { once: true });
+  </script>
+
+  <main class="container mx-auto p-6 space-y-16">
+    <!-- Fórum removido conforme solicitado -->
+  </main>
+
+  <footer class="bg-black text-white text-center p-4 mt-16 space-y-2">
+    <p>&copy; 2025 Sociedade Walingardyana. Todos os direitos reservados.</p>
+    <div class="flex justify-center space-x-6">
+      <a href="https://www.youtube.com/@sociedadewalingardyana" target="_blank" class="hover:underline">YouTube</a>
+      <a href="https://discord.gg/xTVv72FUuU" target="_blank" class="hover:underline">Discord</a>
+      <a href="https://www.instagram.com/swalingardynofc/" target="_blank" class="hover:underline">Instagram</a>
+    </div>
+  </footer>
+
+</body>
+</html>
