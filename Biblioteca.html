@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Biblioteca — Sociedade Walingardyana</title>
+
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.172/pdf.min.js"></script>
+
+  <style>
+    body{margin:0; font-family:sans-serif; background:#0f0f10; color:#e7e9ee;}
+    .topbar{padding:1rem; background:#15161a; display:flex; align-items:center; gap:1rem; position:sticky; top:0;}
+    .layout{display:grid; grid-template-columns:260px 1fr; min-height:calc(100vh - 58px);}
+    .sidebar{background:#17181a; padding:1rem; overflow:auto;}
+    .main{padding:1rem;}
+    .grid{display:grid; gap:1rem; grid-template-columns:repeat(auto-fill,minmax(260px,1fr));}
+    .card-book{background:#17181a; border-radius:20px; overflow:hidden; display:flex; flex-direction:column; cursor:pointer; transition:transform .1s;}
+    .card-book:hover{transform:translateY(-2px);}
+    .cover{width:100%; aspect-ratio:3/4; background:#101114; display:flex; align-items:center; justify-content:center;}
+    .cover img{width:100%; height:100%; object-fit:cover;}
+    .meta{padding:.75rem;}
+    .meta h3{margin:0 0 .25rem 0;}
+    .meta .author{color:#aab0bd; font-size:.9rem;}
+    .actions{display:flex; gap:.5rem; padding:.5rem .75rem;}
+    .btn{padding:.4rem .75rem; border-radius:12px; border:none; cursor:pointer; background:#2b2d32; color:#e7e9ee;}
+    .btn:hover{background:#3a3d45;}
+    .fav[aria-pressed="true"]::after{content:"★"; margin-left:.25rem;}
+    .fav[aria-pressed="false"]::after{content:"☆"; margin-left:.25rem;}
+
+    /* Drawer PDF */
+    .drawer{position:fixed; inset:0; background:rgba(0,0,0,.95); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1rem; transform:translateY(100%); transition:transform .2s ease; z-index:50;}
+    .drawer.open{transform:translateY(0);}
+    #pdfCanvas{border:1px solid #2b2d32; border-radius:8px; max-width:100%;}
+    #pdfControls{display:flex; gap:.5rem; align-items:center; margin:1rem 0; color:#e7e9ee;}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="title">Biblioteca</div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h2>Filtros</h2>
+    <!-- Aqui você pode adicionar chips e categorias -->
+  </aside>
+
+  <main class="main">
+    <div id="grade" class="grid"></div>
+  </main>
+</div>
+
+<!-- Drawer PDF -->
+<div id="drawer" class="drawer" aria-hidden="true">
+  <button class="btn" id="closeDrawer">Fechar</button>
+  <h2 id="drawerTitle"></h2>
+  <canvas id="pdfCanvas"></canvas>
+  <div id="pdfControls">
+    <button id="prevPage" class="btn">◀ Página</button>
+    <span id="pageInfo">0 / 0</span>
+    <button id="nextPage" class="btn">Página ▶</button>
+    <button id="zoomIn" class="btn">+</button>
+    <button id="zoomOut" class="btn">−</button>
+  </div>
+</div>
+
+<script>
+const state={
+  livros:[
+    {id:1, titulo:"Compêndio de Triohnte", autor:"Gabryell Aweryan", capa:"Capa.png", baixado:true, favorito:true, tipo:"pdf", arquivo:"Compendio.pdf"}
+  ]
+};
+
+// Renderiza livros
+function render(){
+  const grade=document.getElementById("grade");
+  grade.innerHTML="";
+  state.livros.forEach(l=>{
+    const card=document.createElement("div");
+    card.className="card-book";
+    card.innerHTML=`
+      <div class="cover"><img src="${l.capa}" alt="Capa"/></div>
+      <div class="meta"><h3>${l.titulo}</h3><div class="author">${l.autor}</div></div>
+      <div class="actions">
+        <button class="btn" data-action="baixar" data-id="${l.id}">${l.baixado?"Ler":"Baixar"}</button>
+        <button class="btn fav" aria-pressed="${l.favorito}" data-action="favoritar" data-id="${l.id}"></button>
+      </div>
+    `;
+    grade.appendChild(card);
+  });
+}
+
+// ======= Drawer PDF =======
+const drawer=document.getElementById("drawer");
+const pdfCanvas=document.getElementById("pdfCanvas");
+const ctx=pdfCanvas.getContext("2d");
+let pdfDoc=null, currentPage=1, totalPages=0, scale=1.2;
+
+function openDrawer(title, arquivo){
+  document.getElementById("drawerTitle").textContent=title;
+  drawer.classList.add("open");
+  drawer.setAttribute("aria-hidden","false");
+  pdfjsLib.getDocument(arquivo).promise.then(doc=>{
+    pdfDoc=doc;
+    totalPages=doc.numPages;
+    currentPage=1;
+    renderPage(currentPage);
+  }).catch(err=>{
+    console.error(err);
+    pdfCanvas.style.display="none";
+    alert("Erro ao carregar PDF");
+  });
+}
+
+function closeDrawer(){
+  drawer.classList.remove("open");
+  drawer.setAttribute("aria-hidden","true");
+}
+
+function renderPage(num){
+  pdfDoc.getPage(num).then(page=>{
+    const viewport=page.getViewport({scale});
+    pdfCanvas.height=viewport.height;
+    pdfCanvas.width=viewport.width;
+    const renderContext={canvasContext:ctx, viewport};
+    page.render(renderContext);
+    document.getElementById("pageInfo").textContent=`${num} / ${totalPages}`;
+  });
+}
+
+// Controles PDF
+document.getElementById("prevPage").addEventListener("click",()=>{if(currentPage>1){currentPage--; renderPage(currentPage);}});
+document.getElementById("nextPage").addEventListener("click",()=>{if(currentPage<totalPages){currentPage++; renderPage(currentPage);}});
+document.getElementById("zoomIn").addEventListener("click",()=>{scale+=0.1; renderPage(currentPage);});
+document.getElementById("zoomOut").addEventListener("click",()=>{scale=Math.max(0.5,scale-0.1); renderPage(currentPage);});
+document.getElementById("closeDrawer").addEventListener("click",closeDrawer);
+
+// Ações dos botões da biblioteca
+document.getElementById("grade").addEventListener("click",e=>{
+  const btn=e.target.closest("button[data-action]");
+  if(!btn) return;
+  const id=Number(btn.dataset.id);
+  const livro=state.livros.find(l=>l.id===id);
+  if(btn.dataset.action==="baixar" && livro) openDrawer(livro.titulo, livro.arquivo);
+  if(btn.dataset.action==="favoritar" && livro) { livro.favorito=!livro.favorito; btn.setAttribute("aria-pressed", livro.favorito); }
+});
+
+render();
+</script>
+</body>
+</html>
