@@ -1,232 +1,106 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Biblioteca — Sociedade Walingardyana</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Biblioteca — Sociedade Walingardyana</title>
 
-    <style>
-        body { margin: 0; font-family: sans-serif; background: #000000; color: #e7e9ee; }
-        .topbar { padding: 1rem; background: #15161a; display: flex; align-items: center; gap: 1rem; position: sticky; top: 0; }
-        .layout { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 58px); }
-        .sidebar { background: #17181a; padding: 1rem; overflow: auto; }
-        .main { padding: 1rem; }
-        .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-        .card-book { background: #000000; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform .1s; }
-        .card-book:hover { transform: translateY(-2px); }
-        .cover { width: 100%; aspect-ratio: 3/4; background: #0a0a0a; display: flex; align-items: center; justify-content: center; }
-        .cover img { width: 100%; height: 100%; object-fit: cover; }
-        .meta { padding: .75rem; }
-        .meta h3 { margin: 0 0 .25rem 0; }
-        .meta .author { color: #aab0bd; font-size: .9rem; }
-        .actions { display: flex; gap: .5rem; padding: .5rem .75rem; }
-        .btn { padding: .4rem .75rem; border-radius: 12px; border: none; cursor: pointer; background: #2b2d32; color: #e7e9ee; }
-        .btn:hover { background: #3a3d45; }
-        .fav[aria-pressed="true"]::after { content: "★"; margin-left: .25rem; }
-        .fav[aria-pressed="false"]::after { content: "☆"; margin-left: .25rem; }
-
-        /* Drawer de Imagens */
-        .drawer { position: fixed; inset: 0; background: rgba(0, 0, 0, .95); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; transform: translateY(100%); transition: transform .2s ease; z-index: 50; }
-        .drawer.open { transform: translateY(0); }
-        .drawer-content { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            width: 100%; 
-            height: 100%; 
-            overflow-y: auto; 
-            padding: 1rem; 
-            box-sizing: border-box;
-            transform: scale(1);
-            transform-origin: top center;
-            transition: transform 0.2s ease-in-out;
-        }
-        .drawer-content img { width: 100%; height: auto; margin-bottom: 1rem; border: 1px solid #2b2d32; border-radius: 8px; }
-
-        /* Controles do Drawer */
-        .drawer-controls { display: flex; gap: .5rem; align-items: center; justify-content: center; padding: 1rem 0; }
-
-        /* Modo de leitura imersiva */
-        .reading-mode .topbar,
-        .reading-mode .drawer-controls {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .reading-mode .drawer-content {
-            padding: 0;
-            background: #000;
-        }
-        .reading-mode .drawer-content img {
-            border: none;
-            border-radius: 0;
-            margin-bottom: 0;
-        }
-    </style>
+  <style>
+    body { margin: 0; font-family: sans-serif; background: #000; color: #e7e9ee; }
+    .topbar { padding: 1rem; background: #15161a; display: flex; align-items: center; gap: 1rem; position: sticky; top: 0; }
+    .layout { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 58px); }
+    .sidebar { background: #17181a; padding: 1rem; overflow: auto; }
+    .main { padding: 1rem; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+    .card-book { background: #000; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: transform .1s; }
+    .card-book:hover { transform: translateY(-2px); }
+    .cover { width: 100%; aspect-ratio: 3/4; background: #0a0a0a; display: flex; align-items: center; justify-content: center; }
+    .cover img { width: 100%; height: 100%; object-fit: cover; }
+    .meta { padding: .75rem; }
+    .meta h3 { margin: 0 0 .25rem 0; }
+    .meta .author { color: #aab0bd; font-size: .9rem; }
+    .actions { display: flex; gap: .5rem; padding: .5rem .75rem; align-items: center; }
+    .btn { padding: .4rem .75rem; border-radius: 12px; border: none; cursor: pointer; background: #2b2d32; color: #e7e9ee; }
+    .btn:hover { background: #3a3d45; }
+  </style>
 </head>
 <body>
-<header class="topbar">
+  <header class="topbar">
     <div class="title">Biblioteca</div>
-</header>
+  </header>
 
-<div class="layout">
+  <div class="layout">
     <aside class="sidebar">
-        <h2>Obras compradas</h2>
+      <h2>Obras compradas</h2>
     </aside>
 
     <main class="main">
-        <div id="grade" class="grid"></div>
+      <div id="grade" class="grid"></div>
     </main>
-</div>
+  </div>
 
-<div id="drawer" class="drawer" aria-hidden="true">
-    <div class="topbar">
-        <button class="btn" id="closeDrawer">Fechar</button>
-        <h2 id="drawerTitle"></h2>
-        <button class="btn" id="toggleReadingMode">Ver em Slide</button>
-    </div>
-    <div class="drawer-content"></div>
-    <div class="drawer-controls">
-        <button class="btn" id="zoomOut">-</button>
-        <button class="btn" id="zoomIn">+</button>
-        <span id="pageInfo">0 de 0</span>
-    </div>
-</div>
+  <script>
+    const state = {
+      livros: [
+        {
+          id: 1,
+          titulo: "Compêndio de Triohnte",
+          autor: "Gabryell Aweryan",
+          capa: "Capa.png",
+          baixado: true,
+          votos: 0,
+          tipo: "imagens",
+          pasta: "paginas compendio",
+          totalPaginas: 40
+        }
+      ]
+    };
 
-<script>
-const state = {
-    livros: [
-        {id: 1, titulo: "Compêndio de Triohnte", autor: "Gabryell Aweryan", capa: "Capa.png", baixado: true, favorito: true, tipo: "imagens", pasta: "paginas compendio", totalPaginas: 40}
-    ]
-};
-
-// Renderiza livros
-function render() {
-    const grade = document.getElementById("grade");
-    grade.innerHTML = "";
-    state.livros.forEach(l => {
+    // Renderiza os livros
+    function render() {
+      const grade = document.getElementById("grade");
+      grade.innerHTML = "";
+      state.livros.forEach(l => {
         const card = document.createElement("div");
         card.className = "card-book";
         card.innerHTML = `
-            <div class="cover"><img src="${l.capa}" alt="Capa"/></div>
-            <div class="meta"><h3>${l.titulo}</h3><div class="author">${l.autor}</div></div>
-            <div class="actions">
-                <button class="btn" data-action="baixar" data-id="${l.id}">${l.baixado ? "Ler" : "Baixar"}</button>
-                <button class="btn fav" aria-pressed="${l.favorito}" data-action="favoritar" data-id="${l.id}"></button>
-            </div>
+          <div class="cover"><img src="${l.capa}" alt="Capa"/></div>
+          <div class="meta">
+            <h3>${l.titulo}</h3>
+            <div class="author">${l.autor}</div>
+          </div>
+          <div class="actions">
+            <button class="btn" data-action="baixar" data-id="${l.id}">
+              ${l.baixado ? "Ler" : "Baixar"}
+            </button>
+            <button class="btn fav" data-action="favoritar" data-id="${l.id}">
+              ★ ${l.votos}
+            </button>
+          </div>
         `;
         grade.appendChild(card);
+      });
+    }
+
+    // Clique nos botões
+    document.getElementById("grade").addEventListener("click", e => {
+      const btn = e.target.closest("button[data-action]");
+      if (!btn) return;
+      const id = Number(btn.dataset.id);
+      const livro = state.livros.find(l => l.id === id);
+
+      if (btn.dataset.action === "baixar" && livro) {
+        alert(`Abrindo o livro "${livro.titulo}"...`);
+      }
+
+      if (btn.dataset.action === "favoritar" && livro) {
+        livro.votos++;
+        btn.textContent = `★ ${livro.votos}`;
+      }
     });
-}
 
-// ======= Drawer de Imagens =======
-const drawer = document.getElementById("drawer");
-const drawerContent = document.querySelector(".drawer-content");
-const zoomInBtn = document.getElementById("zoomIn");
-const zoomOutBtn = document.getElementById("zoomOut");
-const pageInfoSpan = document.getElementById("pageInfo");
-
-let currentTotalPages = 0;
-let intersectionObserver = null;
-
-function openDrawer(title, pasta, totalPaginas) {
-    document.getElementById("drawerTitle").textContent = title;
-    drawer.classList.add("open");
-    drawer.setAttribute("aria-hidden", "false");
-    
-    drawerContent.innerHTML = '';
-    
-    currentTotalPages = totalPaginas;
-    pageInfoSpan.textContent = `1 de ${currentTotalPages}`;
-    
-    const pages = [];
-    for (let i = 1; i <= totalPaginas; i++) {
-        const img = document.createElement("img");
-        img.src = `${pasta}/Pagina ${i}.png`;
-        img.alt = `Página ${i}`;
-        img.className = 'pdf-page-image';
-        img.dataset.page = i;
-        drawerContent.appendChild(img);
-        pages.push(img);
-    }
-    
-    // Inicia o observador
-    if (intersectionObserver) {
-        intersectionObserver.disconnect();
-    }
-    
-    intersectionObserver = new IntersectionObserver((entries) => {
-        let currentPage = 1;
-        let maxRatio = 0;
-
-        entries.forEach(entry => {
-            if (entry.intersectionRatio > maxRatio) {
-                maxRatio = entry.intersectionRatio;
-                currentPage = Number(entry.target.dataset.page);
-            }
-        });
-        
-        pageInfoSpan.textContent = `${currentPage} de ${currentTotalPages}`;
-    }, { threshold: 0.5 }); // Define que a página está visível quando 50% dela aparece
-
-    pages.forEach(page => intersectionObserver.observe(page));
-}
-
-function closeDrawer() {
-    drawer.classList.remove("open");
-    drawer.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("reading-mode");
-    document.getElementById("toggleReadingMode").textContent = "Ver em Slide";
-}
-
-// Controles do Drawer
-document.getElementById("closeDrawer").addEventListener("click", closeDrawer);
-document.getElementById("toggleReadingMode").addEventListener("click", () => {
-    document.body.classList.toggle("reading-mode");
-    const toggleButton = document.getElementById("toggleReadingMode");
-    if (document.body.classList.contains("reading-mode")) {
-        toggleButton.textContent = "Sair do Slide";
-    } else {
-        toggleButton.textContent = "Ver em Slide";
-    }
-});
-
-// Lógica de Zoom
-let imageZoom = 1;
-zoomInBtn.addEventListener("click", () => {
-    imageZoom = Math.min(2.0, imageZoom + 0.1);
-    drawerContent.style.transform = `scale(${imageZoom})`;
-});
-
-zoomOutBtn.addEventListener("click", () => {
-    imageZoom = Math.max(0.5, imageZoom - 0.1);
-    drawerContent.style.transform = `scale(${imageZoom})`;
-});
-
-
-// Ações dos botões da biblioteca
-document.getElementById("grade").addEventListener("click", e => {
-    const btn = e.target.closest("button[data-action]");
-    if (!btn) return;
-    const id = Number(btn.dataset.id);
-    const livro = state.livros.find(l => l.id === id);
-    
-    if (btn.dataset.action === "baixar" && livro) {
-        if (livro.baixado) {
-            openDrawer(livro.titulo, livro.pasta, livro.totalPaginas);
-        } else {
-            livro.baixado = true;
-            btn.textContent = "Ler";
-            alert(`Simulando download do livro "${livro.titulo}"`);
-        }
-    }
-    
-    if (btn.dataset.action === "favoritar" && livro) {
-        livro.favorito = !livro.favorito;
-        btn.setAttribute("aria-pressed", livro.favorito);
-    }
-});
-
-render();
-</script>
+    render();
+  </script>
 </body>
 </html>
+
